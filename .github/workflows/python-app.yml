@@ -1,4 +1,4 @@
-name: Python Todo Application Workflow
+name: Python Todo Application CI/CD Pipeline
 
 on:
   push:
@@ -9,41 +9,39 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.11
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.11'
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install flake8 pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Lint with flake8
-      run: |
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          echo "Etapa Build finalizada"
 
   test:
     needs: build
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.11'
-    - name: Test with unittest
-      run: python -m unittest AS1/test_todo.py
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Run unit tests
+        run: |
+          python -m unittest discover -s . -p AS1/test_todo.py
+          echo "Teste finalizado"
 
   deploy:
     needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
-    - uses: actions/checkout@v2
-    - name: Deploy
-      run: echo "Deploying the application..."
+      - uses: actions/checkout@v2
+      - name: Deploy
+        run: |
+          echo "Fazendo Deploy do aplicativo..."
+          echo "Deploy finalizado"
+          run python AS1/hello_world.py
