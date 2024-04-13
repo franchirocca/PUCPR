@@ -1,5 +1,5 @@
 import unittest
-from todo import TodoList
+from AS1.todo import TodoList
 
 class TestTodoList(unittest.TestCase):
     def setUp(self):
