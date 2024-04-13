@@ -37,7 +37,7 @@ jobs:
       with:
         python-version: '3.11'
     - name: Test with unittest
-      run: python -m unittest test_todo.py
+      run: python -m unittest AS1/test_todo.py
 
   deploy:
     needs: test
