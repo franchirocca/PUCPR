@@ -44,4 +44,3 @@ jobs:
         run: |
           echo "Fazendo Deploy do aplicativo..."
           echo "Deploy finalizado"
-          run python AS1/hello_world.py
